@@ -113,6 +113,14 @@
 .landing-intro h1 > span { font-size: .31em; font-weight: 500; letter-spacing: -1px; margin-left: 9px; }
 .landing-intro h1 > b { font-size: .42em; font-weight: 700; letter-spacing: -1px; color: var(--accent); }
 .landing-subtitle { color: var(--muted); font-size: 23px; font-weight: 400; line-height: 1.7; letter-spacing: -.4px; margin-top: 26px; }
+.landing-links { display: flex; align-items: center; gap: 28px; margin-top: 30px; }
+.landing-notes-link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 0; font-size: 13px; }
+.landing-notes-link:hover { color: var(--accent); }
+.landing-stats { display: flex; align-items: center; margin: 32px 0 0; padding-top: 21px; border-top: 1px solid var(--border); }
+.landing-stats > div { display: flex; align-items: center; gap: 14px; padding-right: 30px; }
+.landing-stats > div + div { padding: 0 0 0 30px; border-left: 1px solid var(--border); }
+.landing-stats dt { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.landing-stats dd { order: -1; margin: 0; font: 500 32px 'Manrope',sans-serif; letter-spacing: -1px; }
 @media (max-width:1100px) {
 .landing-intro h1 { font-size: 79px; }
 .landing-subtitle { font-size: 23px; }
@@ -121,6 +129,10 @@
 .landing-hero { grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); min-height: max(650px,calc(100svh - 150px)); padding: 65px 0 130px; }
 .landing-intro h1 { font-size: 73px; }
 .landing-subtitle { font-size: 22px; }
+.landing-stats > div { gap: 11px; padding-right: 22px; }
+.landing-stats > div + div { padding-left: 22px; }
+.landing-stats dt { font-size: 11px; }
+.landing-stats dd { font-size: 29px; }
 }
 @media (max-width:600px) {
 .home-page { padding-bottom: 35px; }
@@ -129,4 +141,10 @@
 .landing-intro h1 { font-size: clamp(60px,18vw,78px); letter-spacing: -4px; }
 .landing-intro h1 > span { margin-left: 7px; }
 .landing-subtitle { font-size: 21px; margin-top: 23px; }
+.landing-links { gap: 27px; margin-top: 26px; }
+.landing-notes-link { font-size: 12px; }
+.landing-stats { margin-top: 29px; padding-top: 19px; }
+.landing-stats > div { gap: 12px; padding-right: 22px; }
+.landing-stats > div + div { padding-left: 22px; }
+.landing-stats dd { font-size: 28px; }
 }

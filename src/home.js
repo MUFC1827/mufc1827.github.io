@@ -37,6 +37,8 @@ export function renderHome(notes, projects) {
       <div class="landing-intro">
         <h1 id="home-title">MUFC<span>1827</span><b>.</b></h1>
         <p class="landing-subtitle">个人项目与研究笔记</p>
+        <div class="landing-links"><a class="button primary" href="#/works">查看作品 ${icon('arrow',17)}</a><a class="landing-notes-link" href="#/notes">阅读笔记 ${icon('external',16)}</a></div>
+        <dl class="landing-stats" aria-label="站点内容"><div><dt>个人项目</dt><dd>${String(projects.length).padStart(2,'0')}</dd></div><div><dt>研究笔记</dt><dd>${String(notes.length).padStart(2,'0')}</dd></div></dl>
       </div>
     </section>
     <section id="home-projects" class="home-section" aria-labelledby="home-project-title"><div class="home-section-heading"><div><span class="home-section-index">01 — PROJECTS</span><h2 id="home-project-title">项目选集<span>.</span></h2></div></div>
