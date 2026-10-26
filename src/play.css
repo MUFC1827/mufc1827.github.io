@@ -1,0 +1,14 @@
+.play-page { padding: 32px 0 55px; }
+.play-back { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.play-back:hover { color: var(--accent); }
+.play-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 25px; margin: 28px 0; }
+.play-heading h1 { font-size: 39px; letter-spacing: -1px; font-weight: 500; }
+.play-heading h1 span { color: var(--accent); }
+.play-heading > span { font: 10px 'Manrope',sans-serif; letter-spacing: 1.4px; color: var(--muted); }
+.play-page > .penalty-widget { max-width: 1120px; margin-inline: auto; }
+@media (max-width:600px) {
+  .play-page { padding: 25px 0 38px; }
+  .play-heading { margin: 23px 0; }
+  .play-heading h1 { font-size: 32px; }
+  .play-heading > span { font-size: 9px; }
+}
