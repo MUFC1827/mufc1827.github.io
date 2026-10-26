@@ -18,7 +18,7 @@ for (const note of notes) {
     links++;
   }
 }
-for (const file of ['index.html','src/main.js','src/style.css','src/redesign.css','src/home.js','src/home.css','src/study-map.js','src/study-map.css','src/penalty.js','src/penalty.css','src/play.css','src/lab.js','src/reader.js','public/favicon.svg','public/images/piano-preview.png','public/images/revolver-preview.png','.github/workflows/deploy.yml']) {
+for (const file of ['index.html','src/main.js','src/style.css','src/redesign.css','src/home.js','src/home.css','src/navigation.css','src/brand.js','src/study-map.js','src/study-map.css','src/penalty.js','src/penalty.css','src/play.css','src/lab.js','src/reader.js','public/favicon.svg','public/images/piano-preview.png','public/images/revolver-preview.png','.github/workflows/deploy.yml']) {
   await access(new URL(`../${file}`, import.meta.url));
 }
 console.log(`内容检查通过：${notes.length} 篇笔记，${links} 处文章链接，发布资源完整。`);

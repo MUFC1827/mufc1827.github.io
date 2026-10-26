@@ -20,9 +20,9 @@ export function renderProjectPreview(project, { eager = false } = {}) {
 function projectCard(project) {
   const copy = projectCopy[project.id];
   return `<article class="home-project home-project-${project.id}">
-    <a class="home-project-visual" href="#/work/${project.id}" aria-label="查看 ${project.name} 项目介绍">${renderProjectPreview(project)}</a>
+    <a class="home-project-visual" href="${project.url}" ${external} aria-label="${project.action}，新标签页">${renderProjectPreview(project)}</a>
     <div class="home-project-body"><div class="home-project-meta"><span>${project.number} / ${copy.category}</span><span>${project.id === 'memo' ? 'DESKTOP' : 'WEB APP'}</span></div>
-      <div class="home-project-name"><h3><a href="#/work/${project.id}">${project.name}</a></h3><a class="home-project-open" href="${project.url}" ${external} aria-label="${project.action}，新标签页">${icon('external',22)}</a></div>
+      <div class="home-project-name"><h3><a href="${project.url}" ${external}>${project.name} ${icon('external',19)}</a></h3></div>
       <p>${copy.description}</p><div class="home-project-details">${copy.detail}</div>
       ${project.download ? `<a class="home-download" href="${project.download}" ${external}>下载 ${icon('external',15)}</a>` : ''}
     </div>
@@ -34,35 +34,21 @@ export function renderHome(notes, projects) {
   try { lastNote = notes.find(note => note.id === localStorage.getItem('mufc-last-read')); } catch {}
   return `<div class="home-page">
     <section class="landing-hero" aria-labelledby="home-title">
-      <div class="landing-intro"><div class="landing-eyebrow"><span class="landing-rule" aria-hidden="true"></span>个人主页</div>
+      <div class="landing-intro">
         <h1 id="home-title">MUFC<span>1827</span><b>.</b></h1>
         <p class="landing-subtitle">个人项目与研究笔记</p>
-        <p class="landing-description">图像生成、独立开发与实验记录。</p>
-        <div class="landing-links"><a class="button primary" href="#/works">查看作品 ${icon('arrow',17)}</a><a class="landing-notes-link" href="#/notes">阅读笔记 ${icon('external',16)}</a></div>
-        <div class="landing-stats"><button data-home-scroll="home-projects" aria-label="浏览 ${projects.length} 个项目"><strong>${String(projects.length).padStart(2,'0')}</strong><span>个人项目 ${icon('arrow',14)}</span></button><button data-home-scroll="home-research" aria-label="浏览 ${notes.length} 篇研究笔记"><strong>${String(notes.length).padStart(2,'0')}</strong><span>研究笔记 ${icon('arrow',14)}</span></button></div>
-      </div><button class="landing-scroll" data-home-scroll="home-projects" aria-label="向下浏览项目与研究内容">向下浏览 ${icon('arrow',14)}</button>
+      </div>
     </section>
-    <div class="home-section-nav"><button data-home-scroll="home-projects"><span>01</span> 项目 ${icon('arrow',15)}</button><button data-home-scroll="home-research"><span>02</span> 研究 ${icon('arrow',15)}</button><a href="#/notes"><span>03</span> 全部笔记 ${icon('external',15)}</a><span class="home-section-note">PERSONAL INDEX</span></div>
-    <section id="home-projects" class="home-section" aria-labelledby="home-project-title"><div class="home-section-heading"><div><span class="home-section-index">01 — PROJECTS</span><h2 id="home-project-title">项目选集<span>.</span></h2></div><a class="home-section-more" href="#/works">全部项目 ${icon('arrow',17)}</a></div>
+    <section id="home-projects" class="home-section" aria-labelledby="home-project-title"><div class="home-section-heading"><div><span class="home-section-index">01 — PROJECTS</span><h2 id="home-project-title">项目选集<span>.</span></h2></div></div>
       <div class="home-projects-grid">${projects.map(projectCard).join('')}</div>
     </section>
-    <section id="home-research" class="home-section home-research" aria-labelledby="home-research-title"><div class="home-section-heading"><div><span class="home-section-index">02 — RESEARCH</span><h2 id="home-research-title">研究路径<span>.</span></h2></div><a class="home-section-more" href="#/notes">${notes.length} 篇笔记 ${icon('arrow',17)}</a></div><p class="home-section-description">从注意力机制到生成模型，再到图像编辑。</p>
+    <section id="home-research" class="home-section home-research" aria-labelledby="home-research-title"><div class="home-section-heading"><div><span class="home-section-index">02 — RESEARCH</span><h2 id="home-research-title">研究路径<span>.</span></h2></div></div><p class="home-section-description">从注意力机制到生成模型，再到图像编辑。</p>
       ${renderStudyMap(notes)}
     </section>
     ${lastNote ? `<a class="home-resume" href="#/notes/${lastNote.id}"><span class="home-resume-label">${icon('book',18)} 上次阅读</span><strong>${esc(lastNote.title)}</strong><span>继续 ${icon('arrow',17)}</span></a>` : ''}
-    <div class="home-bottom-meta"><span>MUFC1827</span><span>PROJECTS / RESEARCH / FOOTBALL</span><a href="https://github.com/MUFC1827/mufc1827.github.io" ${external}>网站源码 ${icon('external',14)}</a></div>
   </div>`;
 }
 
 export function initHome() {
-  const root = document.querySelector('.home-page');
-  const cleanups = [initStudyMap()];
-  const onClick = event => {
-    const trigger = event.target.closest('[data-home-scroll]');
-    if (!trigger) return;
-    const section = document.getElementById(trigger.dataset.homeScroll);
-    section?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
-  };
-  root.addEventListener('click', onClick);
-  return () => { root.removeEventListener('click', onClick); cleanups.forEach(cleanup => cleanup?.()); };
+  return initStudyMap();
 }

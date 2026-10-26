@@ -1,0 +1,12 @@
+.brand-symbol { display: block; flex: none; color: var(--accent); width: 31px; height: 32px; }
+.desktop-nav { position: relative; }
+.desktop-nav > a[aria-current]::after { display: none; }
+.nav-indicator { position: absolute; bottom: 0; left: 0; height: 2px; width: 0; background: var(--accent); border-radius: 2px; opacity: 0; pointer-events: none; }
+.nav-ready .nav-indicator { transition: transform 200ms cubic-bezier(.2,.65,.3,1),width 200ms cubic-bezier(.2,.65,.3,1),opacity 120ms ease; }
+.mobile-nav a[aria-current] { color: var(--accent); }
+@media (max-width:600px) {
+  .brand-symbol { width: 29px; height: 30px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .nav-ready .nav-indicator { transition: none; }
+}

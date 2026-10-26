@@ -1,0 +1,2 @@
+// A compact three-prong mark: a quiet reference to the club, without a crest.
+export const brandSymbol = '<svg class="brand-symbol" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false"><path d="M4 4h3v8c0 4.4 2.8 7.5 7.5 8V8h-3L16 2.5 20.5 8h-3v12c4.7-.5 7.5-3.6 7.5-8V4h3v8c0 6.1-4.3 10.7-10.5 11.1V29h-3v-5.9C8.3 22.7 4 18.1 4 12V4Z" fill="currentColor"/></svg>';

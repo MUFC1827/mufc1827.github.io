@@ -167,6 +167,7 @@ function initReader(note, previous, toc) {
   let lastSaved = 0;
   let fraction = 0;
   let hasScrolled = false;
+  let lastScrollY = window.scrollY;
   let activeId = '';
   storage.set('mufc-last-read', note.id);
 
@@ -200,7 +201,13 @@ function initReader(note, previous, toc) {
     }
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
-  const onScroll = () => { hasScrolled = true; schedule(); };
+  const onScroll = () => {
+    if (window.scrollY !== lastScrollY) {
+      hasScrolled = true;
+      lastScrollY = window.scrollY;
+    }
+    schedule();
+  };
   const jump = (element) => {
     element.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
     element.focus({ preventScroll: true });

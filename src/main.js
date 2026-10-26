@@ -2,11 +2,13 @@ import './style.css';
 import './redesign.css';
 import './lab.css';
 import './play.css';
+import './navigation.css';
 import notes from './data/notes.json';
 import { icon, escapeHTML as esc } from './icons.js';
 import { projects } from './projects.js';
 import { renderHome, initHome, renderProjectPreview } from './home.js';
 import { renderLab, initLab } from './lab.js';
+import { brandSymbol } from './brand.js';
 
 const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
 const write = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch {} };
@@ -23,10 +25,10 @@ const external = 'target="_blank" rel="noopener noreferrer"';
 
 document.querySelector('#app').innerHTML = `
   <header class="site-header"><div class="header-inner container">
-    <a class="brand" href="#/" aria-label="MUFC 主页"><span class="brand-mark">M<span>·</span></span><span>MUFC<span class="brand-handle">1827</span></span></a>
-    <nav class="desktop-nav" aria-label="主导航"><a href="#/" data-nav="home">主页</a><a href="#/works" data-nav="works">作品</a><a href="#/notes" data-nav="notes">研究笔记</a></nav>
+    <a class="brand" href="#/" aria-label="MUFC 主页">${brandSymbol}<span>MUFC<span class="brand-handle">1827</span></span></a>
+    <nav class="desktop-nav" aria-label="主导航"><a href="#/" data-nav="home">主页</a><a href="#/works" data-nav="works">作品</a><a href="#/notes" data-nav="notes">研究笔记</a><span class="nav-indicator" aria-hidden="true"></span></nav>
     <div class="header-actions"><button class="search-trigger" data-open-search aria-label="搜索网站（Ctrl 或 Command 加 K）">${icon('search',17)}<span>搜索</span><kbd>⌘ K</kbd></button><button class="icon-button theme-toggle" aria-label="切换深色模式"></button><button class="icon-button menu-toggle" aria-label="打开导航菜单" aria-expanded="false">${icon('menu')}</button></div>
-  </div><nav class="mobile-nav" aria-label="移动端导航" hidden><a href="#/">主页</a><a href="#/works">作品</a><a href="#/notes">研究笔记</a></nav></header>
+  </div><nav class="mobile-nav" aria-label="移动端导航" hidden><a href="#/" data-nav="home">主页</a><a href="#/works" data-nav="works">作品</a><a href="#/notes" data-nav="notes">研究笔记</a></nav></header>
   <main id="main" class="container" tabindex="-1"></main>
   <footer class="site-footer container"><div><a class="footer-brand" href="#/">MUFC<span>·</span></a></div><div class="footer-links"><a href="#/play/penalty">点球</a><a href="#/lab">专注计时</a><a href="https://github.com/MUFC1827" ${external}>GitHub ${icon('external',14)}</a><span>© ${new Date().getFullYear()} MUFC</span></div></footer>
   <button class="back-top icon-button" aria-label="返回顶部" hidden>${icon('arrow')}</button>
@@ -85,59 +87,114 @@ function syncSavedButtons() {
   });
 }
 
-async function navigate() {
-  const current = ++navigation;
-  cleanup(); cleanup=()=>{};
-  const path = (location.hash.replace(/^#/, '') || '/').split('?')[0];
-  const parts = path.split('/').filter(Boolean);
-  const page = parts[0] || 'home';
-  document.querySelectorAll('[data-nav]').forEach(a=>{const active=a.dataset.nav===(page==='work'?'works':page);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-  document.querySelector('.mobile-nav').hidden=true;
-  document.querySelector('.menu-toggle').setAttribute('aria-expanded','false');
-  document.querySelector('.menu-toggle').setAttribute('aria-label','打开导航菜单');
-  main.setAttribute('aria-busy','false');
-  window.scrollTo({top:0,behavior:'instant'});
-  let title='个人主页';
-  if (page==='home' && parts.length===0) {main.innerHTML=renderHome(notes,projects);cleanup=initHome();}
-  else if (page==='works' && parts.length===1) {main.innerHTML=worksPage();title='作品集';}
-  else if (page==='work' && parts.length===2 && projects.some(p=>p.id===parts[1])) {const p=projects.find(p=>p.id===parts[1]);main.innerHTML=projectPage(p);title=p.name;}
-  else if(page==='notes' && parts.length===1) {main.innerHTML=notesPage();cleanup=initNotes();title='研究笔记';}
-  else if(page==='notes' && parts.length===2 && notes.some(n=>n.id===parts[1])) {
-    const note=notes.find(n=>n.id===parts[1]);title=note.title;
-    main.innerHTML=`<div class="reader-loading"><span class="loading-dot"></span> 正在加载笔记…</div>`;
-    main.setAttribute('aria-busy','true');
-    try {
-      const {loadReader}=await import('./reader.js');
-      const result=await loadReader(note);
-      if(current!==navigation)return;
-      main.innerHTML=result.html;
-      cleanup=result.init?.() || (()=>{});
-      syncSavedButtons();
-    } catch {
-      if(current!==navigation)return;
-      main.innerHTML=`<div class="empty-state"><h1>笔记加载失败</h1><p>请检查网络连接后重试。</p><button class="button primary" data-retry-reader>重新加载</button><a class="text-link" href="#/notes">返回笔记目录</a></div>`;
-    }
-    main.setAttribute('aria-busy','false');
-  }
-  else if(page==='play' && parts.length===2 && parts[1]==='penalty') {
-    title='点球';
-    main.innerHTML='<div class="reader-loading">正在加载…</div>';
-    main.setAttribute('aria-busy','true');
-    try {
-      const [game] = await Promise.all([import('./penalty.js'),import('./penalty.css')]);
-      if(current!==navigation)return;
-      main.innerHTML = '<section class="play-page"><a class="play-back" href="#/">← 返回主页</a><div class="play-heading"><h1>点球<span>.</span></h1><span>INTERACTIVE / 01</span></div>'+game.renderPenalty()+'</section>';
-      cleanup=game.initPenalty();
-    } catch {
-      if(current!==navigation)return;
-      main.innerHTML='<div class="empty-state"><h1>加载失败</h1><p>请检查网络连接后重试。</p><button class="button primary" data-retry-reader>重新加载</button></div>';
-    }
-    main.setAttribute('aria-busy','false');
-  } else if(page==='lab' && parts.length===1) {main.innerHTML=renderLab();cleanup=initLab();title='实验室';}
-  else {main.innerHTML=notFound();title='页面不存在';}
-  document.title=`${title} · MUFC`;
-  if (current>1) main.focus({preventScroll:true});
+const desktopNav = document.querySelector('.desktop-nav');
+const navIndicator = desktopNav.querySelector('.nav-indicator');
+let pendingRoute = null;
+let renderedRoute = null;
+let contentMotion = null;
+
+function positionNavIndicator() {
+  const active = desktopNav.querySelector('[aria-current="page"]');
+  if (!active || desktopNav.offsetWidth === 0) { navIndicator.style.opacity = '0'; return; }
+  navIndicator.style.width = active.offsetWidth + 'px';
+  navIndicator.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+  navIndicator.style.opacity = '1';
 }
+function updateNavigation(page) {
+  const activePage = page === 'work' ? 'works' : page;
+  document.querySelectorAll('[data-nav]').forEach(link => {
+    if (link.dataset.nav === activePage) link.setAttribute('aria-current','page');
+    else link.removeAttribute('aria-current');
+  });
+  positionNavIndicator();
+}
+function closeMenu() {
+  document.querySelector('.mobile-nav').hidden = true;
+  const toggle = document.querySelector('.menu-toggle');
+  toggle.setAttribute('aria-expanded','false');
+  toggle.setAttribute('aria-label','打开导航菜单');
+}
+function stopContentMotion() {
+  contentMotion?.cancel();
+  contentMotion = null;
+}
+const loadingFailure = () => ({
+  title: '加载失败',
+  html: '<div class="empty-state"><h1>加载失败</h1><p>请检查网络连接后重试。</p><button class="button primary" data-retry-reader>重新加载</button></div>',
+});
+async function prepareView(parts) {
+  const page = parts[0] || 'home';
+  if (page === 'home' && parts.length === 0) return { title:'个人主页', html:renderHome(notes,projects), init:initHome };
+  if (page === 'works' && parts.length === 1) return { title:'作品集', html:worksPage() };
+  if (page === 'work' && parts.length === 2) {
+    const project = projects.find(item => item.id === parts[1]);
+    if (project) return { title:project.name, html:projectPage(project) };
+  }
+  if (page === 'notes' && parts.length === 1) return { title:'研究笔记', html:notesPage(), init:initNotes };
+  if (page === 'notes' && parts.length === 2) {
+    const note = notes.find(item => item.id === parts[1]);
+    if (note) {
+      const { loadReader } = await import('./reader.js');
+      return { title:note.title, ...await loadReader(note) };
+    }
+  }
+  if (page === 'play' && parts.length === 2 && parts[1] === 'penalty') {
+    const [game] = await Promise.all([import('./penalty.js'),import('./penalty.css')]);
+    return { title:'点球', html:'<section class="play-page"><a class="play-back" href="#/">← 返回主页</a><div class="play-heading"><h1>点球<span>.</span></h1><span>INTERACTIVE / 01</span></div>'+game.renderPenalty()+'</section>', init:game.initPenalty };
+  }
+  if (page === 'lab' && parts.length === 1) return { title:'实验室', html:renderLab(), init:initLab };
+  return { title:'页面不存在', html:notFound() };
+}
+async function navigate({ force = false } = {}) {
+  const parts = (location.hash.replace(/^#/, '') || '/').split('?')[0].split('/').filter(Boolean);
+  const key = '/' + parts.join('/');
+  if (!force && pendingRoute === key) return;
+  const current = ++navigation;
+  pendingRoute = key;
+  stopContentMotion();
+  closeMenu();
+  updateNavigation(parts[0] || 'home');
+  if (!force && renderedRoute === key) {
+    pendingRoute = null;
+    main.setAttribute('aria-busy','false');
+    return;
+  }
+  main.setAttribute('aria-busy','true');
+  if (!renderedRoute) main.innerHTML = '<div class="reader-loading">正在加载…</div>';
+  let view;
+  try { view = await prepareView(parts); }
+  catch { view = loadingFailure(); }
+  if (current !== navigation) return;
+  const animate = renderedRoute !== null && !matchMedia('(prefers-reduced-motion: reduce)').matches && typeof main.animate === 'function';
+  if (animate) {
+    contentMotion = main.animate([{opacity:1},{opacity:0}], {duration:70,easing:'ease-out',fill:'forwards'});
+    try { await contentMotion.finished; } catch { /* A newer navigation cancels this transition. */ }
+  }
+  if (current !== navigation) return;
+  cleanup();
+  cleanup = () => {};
+  stopContentMotion();
+  main.innerHTML = view.html;
+  window.scrollTo({top:0,behavior:'instant'});
+  document.title = view.title + ' · MUFC';
+  cleanup = view.init?.() || (() => {});
+  syncSavedButtons();
+  renderedRoute = key;
+  pendingRoute = null;
+  main.setAttribute('aria-busy','false');
+  if (current > 1) main.focus({preventScroll:true});
+  if (animate) {
+    const entering = main.animate([{opacity:0},{opacity:1}], {duration:160,easing:'cubic-bezier(.2,.65,.3,1)'});
+    contentMotion = entering;
+    entering.finished.then(() => {
+      if (contentMotion === entering) { entering.cancel(); contentMotion = null; }
+    }).catch(() => {});
+  }
+}
+window.addEventListener('resize',positionNavIndicator,{passive:true});
+if (typeof ResizeObserver === 'function') new ResizeObserver(positionNavIndicator).observe(desktopNav);
+document.fonts?.ready.then(positionNavIndicator);
+requestAnimationFrame(() => desktopNav.classList.add('nav-ready'));
 
 function themeButton() {
   const dark=document.documentElement.dataset.theme==='dark';
@@ -152,9 +209,9 @@ document.addEventListener('click',event=>{
   const target=event.target.closest('button,a'); if(!target)return;
   if(target.matches('.random-note')) location.hash=routeHref(notes[Math.floor(Math.random()*notes.length)].id);
   if(target.matches('[data-save-note]')) {const id=target.dataset.saveNote;if(!notes.some(n=>n.id===id))return;saved=saved.includes(id)?saved.filter(x=>x!==id):[...saved,id];write('mufc-saved-notes',saved);syncSavedButtons();toast(saved.includes(id)?'已收藏':'已取消收藏');}
-  if(target.matches('[data-retry-reader]'))navigate();
+  if(target.matches('[data-retry-reader]'))navigate({force:true});
   if(target.matches('.skip-link')) {event.preventDefault();main.focus();main.scrollIntoView();}
-  if(target.matches('a[href^="#/"]')){document.querySelector('.mobile-nav').hidden=true;document.querySelector('.menu-toggle').setAttribute('aria-expanded','false');document.querySelector('.menu-toggle').setAttribute('aria-label','打开导航菜单');if(target.getAttribute('href')===location.hash){event.preventDefault();dialog.close();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}
+  if(target.matches('a[href^="#/"]')){document.querySelector('.mobile-nav').hidden=true;document.querySelector('.menu-toggle').setAttribute('aria-expanded','false');document.querySelector('.menu-toggle').setAttribute('aria-label','打开导航菜单');if(target.getAttribute('href')===(location.hash||'#/')){event.preventDefault();dialog.close();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}
 });
 window.addEventListener('hashchange',()=>{dialog.close();navigate();});
 const topButton=document.querySelector('.back-top');
