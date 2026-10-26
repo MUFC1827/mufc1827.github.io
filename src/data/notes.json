@@ -1,0 +1,334 @@
+[
+  {
+    "id": "self-attention-1",
+    "title": "Self-Attention · 上",
+    "subtitle": "从 Q、K、V 出发，理解上下文如何进入每一个位置。",
+    "category": "基础架构",
+    "tags": [
+      "Attention",
+      "QKV"
+    ],
+    "words": 1398,
+    "minutes": 5,
+    "sourceFile": "01-Self-Attention（上）.md",
+    "path": "./notes/self-attention-1.md",
+    "order": 1,
+    "date": "2026-07-14",
+    "sourceName": "李宏毅｜自注意力机制和Transformer详细解析，目前最合适新手看的Transformer课程！",
+    "sourceUrl": "https://www.bilibili.com/video/BV1r8nMz4EAj"
+  },
+  {
+    "id": "self-attention-2",
+    "title": "Self-Attention · 下",
+    "subtitle": "多头注意力、位置编码，以及不同 Attention 之间的联系。",
+    "category": "基础架构",
+    "tags": [
+      "Attention",
+      "Multi-Head"
+    ],
+    "words": 1782,
+    "minutes": 6,
+    "sourceFile": "02-Self-Attention（下）.md",
+    "path": "./notes/self-attention-2.md",
+    "order": 2,
+    "date": "2026-07-14",
+    "sourceName": "李宏毅｜自注意力机制和Transformer详细解析，目前最合适新手看的Transformer课程！",
+    "sourceUrl": "https://www.bilibili.com/video/BV1r8nMz4EAj"
+  },
+  {
+    "id": "transformer-1",
+    "title": "Transformer · 上",
+    "subtitle": "Encoder、归一化与前馈网络：把注意力组成完整架构。",
+    "category": "基础架构",
+    "tags": [
+      "Transformer",
+      "Encoder"
+    ],
+    "words": 1718,
+    "minutes": 6,
+    "sourceFile": "03-Transformer（上）.md",
+    "path": "./notes/transformer-1.md",
+    "order": 3,
+    "date": "2026-07-14",
+    "sourceName": "李宏毅｜自注意力机制和Transformer详细解析，目前最合适新手看的Transformer课程！",
+    "sourceUrl": "https://www.bilibili.com/video/BV1r8nMz4EAj?p=3"
+  },
+  {
+    "id": "transformer-2",
+    "title": "Transformer · 下",
+    "subtitle": "从 Decoder 到自回归生成，理解训练与推理之间的区别。",
+    "category": "基础架构",
+    "tags": [
+      "Transformer",
+      "Decoder"
+    ],
+    "words": 2733,
+    "minutes": 10,
+    "sourceFile": "04-Transformer（下）.md",
+    "path": "./notes/transformer-2.md",
+    "order": 4,
+    "date": "2026-07-16",
+    "sourceName": "李宏毅｜自注意力机制和Transformer详细解析，目前最合适新手看的Transformer课程！",
+    "sourceUrl": "https://www.bilibili.com/video/BV1r8nMz4EAj?p=4"
+  },
+  {
+    "id": "attention-is-all-you-need",
+    "title": "Attention Is All You Need",
+    "subtitle": "回到 Transformer 原论文，串起架构、公式与设计取舍。",
+    "category": "基础架构",
+    "tags": [
+      "Transformer",
+      "论文阅读"
+    ],
+    "words": 3248,
+    "minutes": 11,
+    "sourceFile": "05-Attention Is All You Need.md",
+    "path": "./notes/attention-is-all-you-need.md",
+    "order": 5,
+    "date": "2026-08-10",
+    "sourceName": "Attention Is All You Need",
+    "sourceUrl": "https://arxiv.org/abs/1706.03762"
+  },
+  {
+    "id": "ddpm",
+    "title": "DDPM",
+    "subtitle": "一步步加入噪声，再学习一步步去噪：扩散模型的起点。",
+    "category": "生成模型",
+    "tags": [
+      "Diffusion",
+      "DDPM"
+    ],
+    "words": 3787,
+    "minutes": 13,
+    "sourceFile": "06-Denoising Diffusion Probabilistic Models（DDPM）.md",
+    "path": "./notes/ddpm.md",
+    "order": 6,
+    "date": "2026-07-30",
+    "sourceName": "Denoising Diffusion Probabilistic Models",
+    "sourceUrl": "https://proceedings.neurips.cc/paper_files/paper/2020/file/4c5bcfec8584af0d967f1ab10179ca4b-Paper.pdf"
+  },
+  {
+    "id": "rectified-flow",
+    "title": "Rectified Flow",
+    "subtitle": "用速度场连接噪声与数据，理解直线插值和生成轨迹。",
+    "category": "生成模型",
+    "tags": [
+      "Flow Matching",
+      "ODE"
+    ],
+    "words": 4670,
+    "minutes": 16,
+    "sourceFile": "07-Flow Straight and Fast（Rectified Flow）.md",
+    "path": "./notes/rectified-flow.md",
+    "order": 7,
+    "date": "2026-07-30",
+    "sourceName": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+    "sourceUrl": "https://arxiv.org/pdf/2209.03003"
+  },
+  {
+    "id": "stable-diffusion-lab",
+    "title": "Stable Diffusion 实验",
+    "subtitle": "文生图、DDIM 与图像编辑的实验记录和理解。",
+    "category": "实践记录",
+    "tags": [
+      "Stable Diffusion",
+      "DDIM",
+      "实验"
+    ],
+    "words": 2941,
+    "minutes": 10,
+    "sourceFile": "08-Experiment-Stable Diffusion 文生图、DDIM 与图像编辑.md",
+    "path": "./notes/stable-diffusion-lab.md",
+    "order": 8,
+    "date": "2026-08-22",
+    "sourceName": null,
+    "sourceUrl": null
+  },
+  {
+    "id": "latent-diffusion",
+    "title": "Latent Diffusion Models",
+    "subtitle": "把扩散移到潜空间，用 Cross-Attention 接入文本条件。",
+    "category": "生成模型",
+    "tags": [
+      "LDM",
+      "Latent",
+      "Stable Diffusion"
+    ],
+    "words": 6043,
+    "minutes": 21,
+    "sourceFile": "08-High-Resolution Image Synthesis with Latent Diffusion Models（LDM）.md",
+    "path": "./notes/latent-diffusion.md",
+    "order": 9,
+    "date": "2026-08-10",
+    "sourceName": "High-Resolution Image Synthesis with Latent Diffusion Models",
+    "sourceUrl": "https://openaccess.thecvf.com/content/CVPR2022/papers/Rombach_High-Resolution_Image_Synthesis_With_Latent_Diffusion_Models_CVPR_2022_paper.pdf"
+  },
+  {
+    "id": "dit",
+    "title": "Diffusion Transformer",
+    "subtitle": "从 U-Net 到 Transformer：在潜空间中用 patch 组织图像。",
+    "category": "生成模型",
+    "tags": [
+      "DiT",
+      "Transformer",
+      "Scaling"
+    ],
+    "words": 5107,
+    "minutes": 18,
+    "sourceFile": "09-Scalable Diffusion Models with Transformers（DiT）.md",
+    "path": "./notes/dit.md",
+    "order": 10,
+    "date": "2026-08-23",
+    "sourceName": "Scalable Diffusion Models with Transformers",
+    "sourceUrl": "https://openaccess.thecvf.com/content/ICCV2023/papers/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.pdf"
+  },
+  {
+    "id": "mmdit",
+    "title": "MM-DiT / Stable Diffusion 3",
+    "subtitle": "Rectified Flow 与多模态 Transformer 如何组成生成系统。",
+    "category": "生成模型",
+    "tags": [
+      "MM-DiT",
+      "Rectified Flow",
+      "SD3"
+    ],
+    "words": 6504,
+    "minutes": 22,
+    "sourceFile": "10-Scaling Rectified Flow Transformers for High-Resolution Image Synthesis（MM-DiT）.md",
+    "path": "./notes/mmdit.md",
+    "order": 11,
+    "date": "2026-08-23",
+    "sourceName": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+    "sourceUrl": "https://proceedings.mlr.press/v235/esser24a.html"
+  },
+  {
+    "id": "sdedit",
+    "title": "SDEdit",
+    "subtitle": "先加噪、再去噪：让生成先验参与引导式图像编辑。",
+    "category": "编辑与控制",
+    "tags": [
+      "Image Editing",
+      "Diffusion"
+    ],
+    "words": 4549,
+    "minutes": 16,
+    "sourceFile": "11-SDEdit - Guided Image Synthesis and Editing with Stochastic Differential Equations.md",
+    "path": "./notes/sdedit.md",
+    "order": 12,
+    "date": null,
+    "sourceName": null,
+    "sourceUrl": null
+  },
+  {
+    "id": "blended-latent-diffusion",
+    "title": "Blended Latent Diffusion",
+    "subtitle": "用 Mask 在潜空间融合，在局部编辑中保留源图。",
+    "category": "编辑与控制",
+    "tags": [
+      "Image Editing",
+      "Mask",
+      "Latent"
+    ],
+    "words": 4636,
+    "minutes": 16,
+    "sourceFile": "12-Blended Latent Diffusion.md",
+    "path": "./notes/blended-latent-diffusion.md",
+    "order": 13,
+    "date": null,
+    "sourceName": null,
+    "sourceUrl": null
+  },
+  {
+    "id": "prompt-to-prompt",
+    "title": "Prompt-to-Prompt",
+    "subtitle": "通过控制 Cross-Attention，让文字编辑与图像结构相连。",
+    "category": "编辑与控制",
+    "tags": [
+      "Attention Control",
+      "Image Editing"
+    ],
+    "words": 5341,
+    "minutes": 18,
+    "sourceFile": "13-Prompt-to-Prompt Image Editing with Cross-Attention Control.md",
+    "path": "./notes/prompt-to-prompt.md",
+    "order": 14,
+    "date": null,
+    "sourceName": null,
+    "sourceUrl": null
+  },
+  {
+    "id": "flowedit",
+    "title": "FlowEdit",
+    "subtitle": "无需反演的 Flow 编辑：从源速度与目标速度的差异出发。",
+    "category": "编辑与控制",
+    "tags": [
+      "Flow",
+      "Inversion-Free",
+      "Image Editing"
+    ],
+    "words": 6302,
+    "minutes": 22,
+    "sourceFile": "14-FlowEdit - Inversion-Free Text-Based Editing Using Pre-Trained Flow Models.md",
+    "path": "./notes/flowedit.md",
+    "order": 15,
+    "date": null,
+    "sourceName": "FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models",
+    "sourceUrl": "https://arxiv.org/abs/2412.08629"
+  },
+  {
+    "id": "stable-flow",
+    "title": "Stable Flow",
+    "subtitle": "寻找影响图像形成的关键层，在注意力内部控制编辑。",
+    "category": "编辑与控制",
+    "tags": [
+      "Vital Layers",
+      "Flow",
+      "Image Editing"
+    ],
+    "words": 5865,
+    "minutes": 20,
+    "sourceFile": "15-Stable Flow - Vital Layers for Training-Free Image Editing.md",
+    "path": "./notes/stable-flow.md",
+    "order": 16,
+    "date": null,
+    "sourceName": "Stable Flow: Vital Layers for Training-Free Image Editing",
+    "sourceUrl": "https://arxiv.org/abs/2411.14430"
+  },
+  {
+    "id": "controlnet",
+    "title": "ControlNet",
+    "subtitle": "冻结生成主干，用可训练分支接入边缘、姿态与深度等条件。",
+    "category": "编辑与控制",
+    "tags": [
+      "ControlNet",
+      "Conditional Generation"
+    ],
+    "words": 7110,
+    "minutes": 24,
+    "sourceFile": "16-Adding Conditional Control to Text-to-Image Diffusion Models（ControlNet）.md",
+    "path": "./notes/controlnet.md",
+    "order": 17,
+    "date": null,
+    "sourceName": "Adding Conditional Control to Text-to-Image Diffusion Models",
+    "sourceUrl": "https://openaccess.thecvf.com/content/ICCV2023/html/Zhang_Adding_Conditional_Control_to_Text-to-Image_Diffusion_Models_ICCV_2023_paper.html"
+  },
+  {
+    "id": "generative-models-map",
+    "title": "生成式模型知识地图",
+    "subtitle": "把基础、生成架构与可控编辑放进同一个系统，建立完整学习主线。",
+    "category": "知识体系",
+    "tags": [
+      "知识地图",
+      "复习",
+      "生成模型"
+    ],
+    "words": 25773,
+    "minutes": 86,
+    "sourceFile": "17-生成式模型知识体系总复习与汇报主线.md",
+    "path": "./notes/generative-models-map.md",
+    "order": 18,
+    "date": null,
+    "sourceName": null,
+    "sourceUrl": null
+  }
+]
