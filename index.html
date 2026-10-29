@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f6f5f2" />
+    <meta name="theme-color" content="#f7f6f2" />
     <meta name="description" content="MUFC 的个人项目与研究笔记。图像生成、独立开发与实验记录。" />
     <meta property="og:title" content="MUFC · 个人主页" />
     <meta property="og:description" content="个人项目、图像生成研究笔记与实验记录。" />
@@ -13,7 +13,7 @@
     <link rel="canonical" href="https://mufc1827.github.io/" />
     <title>MUFC · 个人主页</title>
     <script>
-      try { if (localStorage.getItem('mufc-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch {}
+      try { if (localStorage.getItem('mufc-theme') === 'dark' || /[?&]theme=dark\b/.test(location.search)) document.documentElement.dataset.theme = 'dark'; } catch {}
     </script>
   </head>
   <body>

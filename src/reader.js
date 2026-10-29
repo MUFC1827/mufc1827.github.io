@@ -2,6 +2,8 @@ import MarkdownIt from 'markdown-it';
 import texmath from 'markdown-it-texmath';
 import katex from 'katex';
 import DOMPurify from 'dompurify';
+import notes from './data/notes.json';
+import { getNoteCategory } from './study-map.js';
 import 'katex/dist/katex.min.css';
 import './reader.css';
 
@@ -94,7 +96,7 @@ function noteUrl(note) {
   return url;
 }
 
-function failure(note) {
+function failure() {
   return {
     html: `<section class="reader reader-error"><a class="reader-back" href="#/notes">← 返回研究笔记</a><div class="reader-error-card"><span class="reader-eyebrow">RESEARCH NOTES</span><h1>这篇笔记暂时没能打开</h1><p>请检查网络连接后重试。</p><button class="reader-button" type="button" data-reader-retry>重新加载</button></div></section>`,
     init() {
@@ -126,6 +128,10 @@ export async function loadReader(note) {
       FORBID_TAGS: ['style', 'script', 'iframe', 'form', 'object', 'embed'],
     });
     const stored = clamp(Number(storage.get(`mufc-reader-${note.id}`)) || 0);
+    const categoryName = getNoteCategory(note);
+    const noteIndex = notes.findIndex(item => item.id === note.id);
+    const prevNote = noteIndex > 0 ? notes[noteIndex - 1] : null;
+    const nextNote = noteIndex >= 0 && noteIndex < notes.length - 1 ? notes[noteIndex + 1] : null;
     const sourceLink = /^https?:\/\//i.test(note.sourceUrl || '')
       ? `<a href="${escapeHtml(note.sourceUrl)}" target="_blank" rel="noopener noreferrer">阅读原始来源 ↗</a>` : '';
     const toc = env.headings.map((heading) => `<button type="button" class="reader-toc-item reader-toc-level-${heading.level}" data-reader-section="${escapeHtml(heading.id)}">${escapeHtml(heading.text)}</button>`).join('');
@@ -133,8 +139,8 @@ export async function loadReader(note) {
       <div class="reader-progress" role="progressbar" aria-label="阅读进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
       <a class="reader-back" href="#/notes">← 返回研究笔记</a>
       <header class="reader-header">
-        <div class="reader-breadcrumb"><a href="#/">主页</a><span>/</span><a href="#/notes">研究笔记</a><span>/</span><span>${escapeHtml(note.category)}</span></div>
-        <div class="reader-meta"><span>${escapeHtml(note.category)}</span><span>约 ${Number(note.minutes) || 1} 分钟阅读</span>${note.date ? `<time datetime="${escapeHtml(note.date)}">${escapeHtml(note.date)}</time>` : ''}</div>
+        <div class="reader-breadcrumb"><a href="#/">主页</a><span>/</span><a href="#/notes">研究笔记</a><span>/</span><a href="#/notes?cat=${encodeURIComponent(categoryName)}">${escapeHtml(categoryName)}</a></div>
+        <div class="reader-meta"><span>${escapeHtml(categoryName)}</span><span>第 ${String(noteIndex + 1).padStart(2, '0')} / ${String(notes.length).padStart(2, '0')} 篇</span><span>约 ${Number(note.minutes) || 1} 分钟阅读</span>${note.date ? `<time datetime="${escapeHtml(note.date)}">${escapeHtml(note.date)}</time>` : ''}</div>
         <h1>${escapeHtml(note.title)}</h1>
         <p class="reader-subtitle">${escapeHtml(note.subtitle)}</p>
         <div class="reader-actions"><button class="reader-button" type="button" data-save-note="${note.id}" aria-pressed="false">收藏笔记</button><a href="${escapeHtml(resource.pathname)}" download="${note.id}.md">下载 Markdown ↓</a>${sourceLink}</div>
@@ -142,7 +148,12 @@ export async function loadReader(note) {
       </header>
       <div class="reader-layout"><article class="reader-prose" aria-label="笔记正文">${prose}</article>
         <aside class="reader-sidebar" aria-label="文章目录"><div class="reader-toc"><div class="reader-toc-heading">本文目录 <span data-reader-percent>0%</span></div><nav>${toc || '<p class="reader-toc-empty">暂无目录</p>'}</nav></div></aside></div>
-      <footer class="reader-footer"><a href="#/notes">← 浏览全部笔记</a></footer>
+      <footer class="reader-footer">
+        <div class="reader-pager">
+          ${prevNote ? `<a class="reader-pager-card" href="#/notes/${escapeHtml(prevNote.id)}"><span class="reader-pager-label">← 上一篇</span><strong>${escapeHtml(prevNote.title)}</strong><small>${escapeHtml(prevNote.subtitle)}</small></a>` : `<a class="reader-pager-card" href="#/notes"><span class="reader-pager-label">← 笔记目录</span><strong>浏览全部 ${notes.length} 篇研究笔记</strong><small>按研究路径与关键词筛选</small></a>`}
+          ${nextNote ? `<a class="reader-pager-card is-next" href="#/notes/${escapeHtml(nextNote.id)}"><span class="reader-pager-label">下一篇 →</span><strong>${escapeHtml(nextNote.title)}</strong><small>${escapeHtml(nextNote.subtitle)}</small></a>` : `<a class="reader-pager-card is-next" href="#/notes"><span class="reader-pager-label">已完成最后一篇 →</span><strong>返回研究笔记列表</strong><small>回顾 Attention、扩散与流模型全线</small></a>`}
+        </div>
+      </footer>
     </section>`;
     return { html, init: () => initReader(note, stored, env.headings) };
   } catch {
