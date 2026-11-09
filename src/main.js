@@ -47,7 +47,6 @@ document.querySelector('#app').innerHTML = `
       <a href="#/" data-nav="home">主页</a>
       <a href="#/works" data-nav="works">作品</a>
       <a href="#/notes" data-nav="notes">研究笔记</a>
-      <a href="#/play/penalty" data-nav="play">点球</a>
       <a href="#/lab" data-nav="lab">实验室</a>
       <span class="nav-indicator" aria-hidden="true"></span>
     </nav>
@@ -61,7 +60,6 @@ document.querySelector('#app').innerHTML = `
     <a href="#/" data-nav="home">主页</a>
     <a href="#/works" data-nav="works">作品集</a>
     <a href="#/notes" data-nav="notes">研究笔记</a>
-    <a href="#/play/penalty" data-nav="play">点球模拟</a>
     <a href="#/lab" data-nav="lab">实验室 · 专注计时</a>
   </nav></header>
   <main id="main" class="container" tabindex="-1"></main>
@@ -83,7 +81,7 @@ document.querySelector('#app').innerHTML = `
         <div>
           <h2>互动与外链</h2>
           <ul>
-            <li><a href="#/play/penalty">点球物理模拟</a></li>
+            <li><a href="https://penalty-mufc.vercel.app/" ${external}>Penalty MUFC ${icon('external', 13)}</a></li>
             <li><a href="#/lab">点云与专注计时</a></li>
             <li><a href="https://github.com/MUFC1827" ${external}>GitHub ${icon('external', 13)}</a></li>
           </ul>
@@ -147,9 +145,9 @@ function noteRow(note, index = 0) {
 
 function worksPage() {
   return `<section class="page-intro" data-reveal>
-    <div class="eyebrow"><span class="accent">01 — 03</span> / SELECTED PROJECTS</div>
+    <div class="eyebrow"><span class="accent">01 — 0${projects.length}</span> / SELECTED PROJECTS</div>
     <h1>个人项目<span class="accent">.</span></h1>
-    <p>围绕声音交互、线下桌游聚会与本地优先的桌面效率工具，保持克制的视觉与即开即用的体验。</p>
+    <p>围绕声音交互、线下桌游聚会、三维物理点球博弈与本地优先的桌面效率工具，保持克制的视觉与即开即用的体验。</p>
     <div class="page-meta">
       <span><strong>${projects.length}</strong> 个独立项目</span>
       <span>Web 应用与跨平台桌面软件</span>
@@ -405,12 +403,12 @@ async function prepareView(parts, queryParams) {
     }
   }
   if (page === 'play' && parts.length === 2 && parts[1] === 'penalty') {
-    const [game] = await Promise.all([import('./penalty.js'), import('./penalty.css')]);
-    const rawHtml = game.renderPenalty();
-    const wrappedHtml = rawHtml.includes('play-page')
-      ? rawHtml
-      : `<section class="play-page"><a class="play-back back-link" href="#/">${icon('back', 16)} 返回主页</a><div class="play-heading"><h1>点球<span>.</span></h1><span>INTERACTIVE / 01 · STRETFORD END</span></div>${rawHtml}</section>`;
-    return { title: '点球模拟', html: wrappedHtml, init: game.initPenalty };
+    const project = projects.find(item => item.id === 'penalty');
+    if (project) {
+      history.replaceState(null, '', '#/work/penalty');
+      updateNavigation('works');
+      return { title: project.name, html: projectPage(project) };
+    }
   }
   if (page === 'lab' && parts.length === 1) return { title: '实验室', html: renderLab(), init: initLab };
   return { title: '页面不存在', html: notFound() };
@@ -555,7 +553,6 @@ const searchEntries = [
     { title: '主页', url: '#/', subtitle: '个人项目与生成式 AI 研究笔记' },
     { title: '作品集', url: '#/works', subtitle: '个人独立开发项目展示' },
     { title: '研究笔记', url: '#/notes', subtitle: '18 篇图像生成与扩散模型笔记' },
-    { title: '点球模拟', url: '#/play/penalty', subtitle: '120 Hz 物理轨迹与守门员扑救博弈' },
     { title: '实验室 · 专注计时', url: '#/lab', subtitle: '交互式点云生成艺术与 25 分钟番茄钟' },
   ].map(n => ({ ...n, type: '页面', terms: '' })),
   ...projects.map(p => ({ title: p.name, url: `#/work/${p.id}`, subtitle: p.label, type: '作品', terms: `${p.type} ${p.detail}` })),

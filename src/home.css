@@ -251,7 +251,7 @@
    ========================================================================== */
 .home-projects-grid {
   display: grid;
-  grid-template-columns: 1.08fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 .home-project {
@@ -327,25 +327,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
-
-.home-project-memo {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1.12fr;
-}
-.home-project-memo .home-project-visual {
-  grid-column: 2;
-  grid-row: 1;
-  height: 100%;
-  min-height: 290px;
-  padding: 32px 40px 0;
-}
-.home-project-memo .home-project-body {
-  grid-column: 1;
-  grid-row: 1;
-  align-self: center;
-  padding: 30px 34px;
 }
 
 /* ==========================================================================

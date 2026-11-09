@@ -166,27 +166,28 @@ export function renderHome(notes, projects) {
         <div>
           <span class="eyebrow"><span class="accent">03</span> — INTERACTIVE & LAB</span>
           <h2 id="home-interactive-title">互动与实验<span>.</span></h2>
-          <p class="home-section-description">物理模拟小游戏、生成式点云演化与专注计时工具。</p>
+          <p class="home-section-description">生成式点云演化与 25 分钟沉浸式专注计时工具。</p>
         </div>
+        <a class="text-link" href="#/lab">进入实验室 ${icon('arrow', 16)}</a>
       </div>
       <div class="home-interactive-grid">
-        <a class="interactive-card interactive-card-penalty" href="#/play/penalty" data-reveal style="--i:0">
+        <a class="interactive-card interactive-card-lab" href="#/lab" data-reveal style="--i:0">
           <div class="interactive-card-top">
-            <span class="eyebrow"><span class="accent">PLAY</span> / STRETFORD END</span>
-            <span class="chip">120 Hz 物理模拟</span>
+            <span class="eyebrow"><span class="accent">LAB 01</span> / GENERATIVE POINT CLOUD</span>
+            <span class="chip">扩散与流模型直觉</span>
           </div>
-          <h3>点球模拟<span>.</span></h3>
-          <p>支持推射、大力与弧线三种脚法，实时计算重力、空气阻力、马格努斯旋转、门框圆柱碰撞与守门员延迟预判扑救。</p>
-          <span class="text-link">进入球场挑战 ${icon('arrow', 16)}</span>
+          <h3>生成式点云演化<span>.</span></h3>
+          <p>交互式观察随机高斯散点向结构化波形、螺旋与双月分布的连续速度场传输过程，直观理解 Flow Matching 与扩散生成机制。</p>
+          <span class="text-link">体验点云演化 ${icon('arrow', 16)}</span>
         </a>
-        <a class="interactive-card interactive-card-lab" href="#/lab" data-reveal style="--i:1">
+        <a class="interactive-card interactive-card-focus" href="#/lab" data-reveal style="--i:1">
           <div class="interactive-card-top">
-            <span class="eyebrow"><span class="accent">LAB</span> / GENERATIVE & FOCUS</span>
-            <span class="chip">点云 · 番茄钟</span>
+            <span class="eyebrow"><span class="accent">LAB 02</span> / FOCUS TIMER</span>
+            <span class="chip">番茄钟 · 沉浸专注</span>
           </div>
-          <h3>实验室与专注计时<span>.</span></h3>
-          <p>交互式观察随机散点向有序波形的连续过渡（呼应扩散与流模型的生成直觉），并内置 25 分钟沉浸式专注计时器。</p>
-          <span class="text-link">打开实验室 ${icon('arrow', 16)}</span>
+          <h3>25 分钟专注计时<span>.</span></h3>
+          <p>为论文阅读与代码实现打造的极简番茄钟工具，支持专注/休息周期切换、进度可视化与柔和提示音。</p>
+          <span class="text-link">开启专注计时 ${icon('arrow', 16)}</span>
         </a>
       </div>
     </section>
