@@ -626,3 +626,10 @@ document.addEventListener('keydown', event => {
 });
 
 navigate();
+
+;(function forceMuFavicon() {
+  try {
+    const href = './mu-monogram.png?v=5';
+    document.querySelectorAll('link[rel*="icon"]').forEach(el => { if (el.id !== 'favicon-data') el.href = href; });
+  } catch {}
+})();

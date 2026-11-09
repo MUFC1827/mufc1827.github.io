@@ -109,6 +109,7 @@ main:focus { outline: none; }
 .header-inner { height: var(--header-h); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; justify-self: start; font: 800 19px/1 var(--font-display); letter-spacing: -.04em; }
 .brand-symbol { display: block; flex: none; width: 34px; height: 26px; color: var(--accent); transition: transform .5s var(--ease); }
+.brand-symbol-img { width: 36px; height: 36px; object-fit: contain; }
 .brand:hover .brand-symbol { transform: rotate(-6deg) scale(1.06); }
 .brand-handle { margin-left: 3px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0; }
 
